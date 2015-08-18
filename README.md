@@ -10,7 +10,7 @@ The pi communicated to an arduino via serial, reading measurements of temperatur
 and water from relelvant sensors. We also attempted to add control of the arduino by the pi using GPIO communication.
 Currently this is bugged (possibly due to PWM on the pin used for comm - currently pin 2).
 
-The dataplots.py file currently polls the arduino serial collection, appends to a text data file, processing the data file
+The main.py file currently polls the arduino serial collection, appends to a text data file, processing the data file
 and uses the matplotlib library to generate and save plots of the data.
 
 Arduino code reponds to the water sensor and control a relay system to drive a 12V air pump to pump water into the plants.
