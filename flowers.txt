@@ -1,0 +1,28 @@
+I AM IN YOUR SYSTEM.
+I HAVE ROOT
+MWAH HA HA HA
+water Sensor: 176
+Current humidity = 35.00%  
+temperature = 29.00C  
+-----------------------------------------------
+water Sensor: 1003
+Current humidity = 38.00%  
+temperature = 26.00C  
+-----------------------------------------------
+water Sensor: 1009
+Current humidity = 40.00%  
+temperature = 26.00C  
+-----------------------------------------------
+water Sensor: 1003
+Current humidity = 40.00%  
+temperature = 27.00C  
+-----------------------------------------------
+water Sensor: 1020
+Current humidity = 36.00%  
+temperature = 28.00C  
+-----------------------------------------------
+water Sensor: 1010
+Current humidity = 38.00%  
+temperature = 25.00C  
+-----------------------------------------------
+water Sensor: 974
