@@ -13,12 +13,15 @@ def hello():
 @route('/getdata')
 def get_data():
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(2, GPIO.OUT)
-    GPIO.output(2, False)
+    GPIO.setup(18, GPIO.OUT)
+    GPIO.output(18, False)
     
     try:
-        ser = serial.Serial('/dev/ttyACM0', 9600)
-        my_file = open(get_dest("flowers.txt"), 'a')
+        ser = serial.Serial('/dev/ttyUSB0', 9600)
+    except:
+        print 'could not find arduino'
+    try:
+        my_file = open("flowers.txt", 'a')
         count = 0
         while count < 25:
             line = ser.readline()
@@ -27,8 +30,9 @@ def get_data():
             count = count + 1
         my_file.close()
     except:
-        print 'could not find arduino'
-
+        print 'couldnt write data to file'
+    
+    
     ifile = open('flowers.txt', 'r')
     temp = []
     water = []
@@ -36,19 +40,28 @@ def get_data():
 
     for line in ifile.readlines():
         line = line.strip()
-        print line[:5]
-        if line[:5] == 'water':
-            water.append(float(line.split(':')[-1]))
+        print line
+        if line[:5] == 'Water':
+            try:
+                water.append(float(line.split(':')[-1]))
+            except:
+                print 'serial error'
         elif line[:5] == 'Curre':
-            humidity.append(float(line.split('=')[-1][:-1]))
+            try:
+                humidity.append(float(line.split('=')[-1][:-1]))
+            except:
+                print 'serial error'
         elif line[:5] == 'tempe':
-            temp.append(float(line.split('=')[-1][:-1]))
+            try:
+                temp.append(float(line.split('=')[-1][:-1]))
+            except:
+                print 'serial error'
 
     print temp
     print water
     print humidity
 
-    """pylab.figure(1)
+    pylab.figure(1)
     fig, ax1 = plt.subplots()
     pylab.plot(range(len(temp)), temp, 'ro-')
     pylab.xlabel('Time')
@@ -67,8 +80,9 @@ def get_data():
     pylab.ylabel('Water')
     pylab.ylim(0, 1024)
     pylab.savefig('water.png')
-	"""
+    
     ifile.close()
+    
     return template("plot")
 
 @route('/water')
@@ -87,12 +101,12 @@ def flower():
 def waterplant():
     
 
-    print "Led on\n"
-    GPIO.output(2, True)
+    print "Pump On\n"
+    GPIO.output(18, True)
     sleep(5)
 
-    print "Led off\n"
-    GPIO.output(2, False)
+    print "Pump Off\n"
+    GPIO.output(18, False)
     return "Plant's have been watered. Go back to see new data!"
     
 
