@@ -11,7 +11,7 @@
 	<h2>Temperature and Humidity Data</h2>
 	<img src="temperature"/>
 	<h2>Moisture levels</h2>
-	<p> 1023 = Very dry, 1 = very moist </p>
+	<p> 0 = Sensor in Air, 1023 = very moist </p>
 	<img src="water"/>
 	</body>
 
