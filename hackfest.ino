@@ -1,14 +1,17 @@
 //Name: Cactus Flower Indoor Gardening System
 //--------------------------------------------------------------
-#include <Servo.h> 
-#include <dht.h>
+#include <Servo.h>
+#include "DHT.h"
 #define wtrPin A1  //water sensor pin
-#define dht_dpin A0 // Humid and temperature sensor
+#define DHTPIN 2
 #define controlPin A5  // connects to raspberry pi for manual watering of plants
 #define pumpPin 9  //pin of the pump
 
-//boolean pump = false;  //for furthere development so that it may print if pump is on or not.
-dht DHT;  
+//boolean pump = false;  //for furthere development so that it may
+print if pump is on or not.
+#define DHTTYPE DHT22   // DHT 22  (AM2302)
+
+DHT dht(DHTPIN, DHTTYPE);
 int wtrVal = 0;
 //-------------------------------------------------------------
 void setup()
@@ -16,49 +19,60 @@ void setup()
 // initialize serial communications at 9600 bps:
  Serial.begin(9600);
  pinMode(wtrPin, INPUT);
- pinMode(pumpPin, OUTPUT);
+ //pinMode(pumpPin, OUTPUT);
  pinMode(controlPin, INPUT);
  closePump();
+ pinMode(13, OUTPUT);
+ dht.begin();
 }
 
 void loop()
 {
-//  if(analogRead(controlPin) > 200){    //for manual watering of plants from raspberry pi
+  if(analogRead(controlPin) > 200){    //for manual watering of plants
+from raspberry pi
 //    waterplant();
-//  }
+    Serial.println('Control Pin High');
+    digitalWrite(13, HIGH); //signal light
+    delay(1000);
+ }
  readSensors();
- checkWater(); 
+ checkWater();
  checkHumidity();
- checkTemp();
  printData();
- delay(1000);
-} 
+ delay(2000);
+ digitalWrite(13, LOW); //signal light
+}
 
 void printData(){
  //  Serial.println(analogRead(controlPin));
- Serial.print("water Sensor: ");
+ Serial.print("Water Sensor: ");
  Serial.println(wtrVal); // print the value:
  Serial.print("Current humidity = ");
- Serial.print(DHT.humidity);  
+ Serial.print(dht.readHumidity());
  Serial.println("%  ");
  Serial.print("temperature = ");
- Serial.print(DHT.temperature); 
+ Serial.print(dht.readTemperature());
  Serial.println("C  ");
+ Serial.print("Pi Control Pin: ");
+ Serial.println(analogRead(controlPin));
  Serial.println("-----------------------------------------------");
 }
 
 void readSensors(){
  wtrVal = analogRead(wtrPin); // read the analog 1 in value:
- DHT.read11(dht_dpin);  
- printData();
+ //printData();
 }
 
 void checkWater(){
- if (wtrVal > 400){
-   Serial.print("pump:");
-   Serial.println(wtrVal);
+  if (wtrVal == 0){
+   Serial.println("Pump (failsafe)");
+   closePump();
+   delay(2000);
+ }
+ else if (wtrVal < 400){
+   Serial.println("Pump (water ind.)");
    openPump();
-   delay(5000);
+   delay(2000);
    closePump();
  }
  delay(100);
@@ -66,28 +80,21 @@ void checkWater(){
 
 void waterplant(){
   openPump();
-  delay(500);
+  delay(5000);
   closePump();
-  Serial.println("Watering plants");
+  Serial.println("Pump (RPi)");
 }
 
 void checkHumidity(){
-  readSensors();
- if (DHT.humidity<20 && wtrVal > 200){  //if humidity is too low, and the soil is not too wet, open the
-   openPump();                          //water system to increase humidity so the garden isn't too dry
+ //readSensors();
+ if (dht.readHumidity()<20 && wtrVal < 200){  //if humidity is too
+low, and the soil is not too wet, open the
+   Serial.println("Pump (Humidity)");
+   openPump();                          //water system to increase
+humidity so the garden isn't too dry
    delay(3000);
    closePump();
- } 
- delay(100);
-}
-
-void checkTemp(){        //if the garden is too cold, heat it up to a suitable temperature
-  readSensors();
-  if (DHT.temperature<13){
-   //heater on 
-  } else if (DHT.temperature > 20){
-   //heater off 
-  }
+ }
  delay(100);
 }
 
@@ -98,4 +105,3 @@ void openPump(){
 void closePump(){
    digitalWrite(pumpPin, HIGH);
 }
-
