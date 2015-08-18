@@ -1,5 +1,5 @@
 # Cactus-flower
-Code for web enable plant watering system
+Code for web enabled, automatic plant watering system
 
 This code was developed by Team Cactus Flowers from the Summer of Tech Wellington Hardware Hackathon on Saturday 15th August 2015. 
 Team members were: Divya, Michael, Bonnie and Shaetrun with some mentorship by Elf.
@@ -20,3 +20,5 @@ Suggested edits to come are:
 * Fixing the GPIO comms with the Arduino and RPi
 * Having the Rpi return the correct serial interface with the arduino
 * Adding an Rpi infra-red camera to the mix to get infragrams of the plants
+* Adding control of the arduino program via node.js system and johnny 5.
+* Add list fo equipment/specific sensors used.
