@@ -15,10 +15,16 @@ and uses the matplotlib library to generate and save plots of the data.
 
 Arduino code reponds to the water sensor and control a relay system to drive a 12V air pump to pump water into the plants.
 
+Equipment:
+DHT22 Temperature and Humidity sensor (https://nicegear.co.nz/sensors/humidity-and-temperature-sensor-dht22/)
+Soil Moisture Sensor (https://nicegear.co.nz/sensors/soil-moisture-sensor-arduino-compatible/)
+Arduino Uno
+RPi 2 -> GPIO output to Arduino on GPIO 18
+
 Suggested edits to come are:
-* adding some failsafes for the water pumping (i.e. when the sensor is compoletely dry)
-* Fixing the GPIO comms with the Arduino and RPi
-* Having the Rpi return the correct serial interface with the arduino
+* [COMPLETE] adding some failsafes for the water pumping (i.e. when the sensor is compoletely dry)
+* [COMPLETE] Fixing the GPIO comms with the Arduino and RPi
+* [COMPLETE] Having the Rpi return the correct serial interface with the arduino
+* [COMPLETE] Add list for equipment/specific sensors used.
 * Adding an Rpi infra-red camera to the mix to get infragrams of the plants
 * Adding control of the arduino program via node.js system and johnny 5.
-* Add list fo equipment/specific sensors used.
