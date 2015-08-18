@@ -8,7 +8,7 @@ Code uses a rpi as a webserver using first raw html (plot.html) then a Bottle py
 enable external control of the pi. 
 The pi communicated to an arduino via serial, reading measurements of temperature, humidity 
 and water from relelvant sensors. We also attempted to add control of the arduino by the pi using GPIO communication.
-Currently this is bugged (possibly due to PWM on the pin used for comm - currently pin 2).
+Currently this works but need some serious optimization.
 
 The main.py file currently polls the arduino serial collection, appends to a text data file, processing the data file
 and uses the matplotlib library to generate and save plots of the data.
