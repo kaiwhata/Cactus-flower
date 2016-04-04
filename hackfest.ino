@@ -24,7 +24,7 @@ void setup()
  pinMode(13, OUTPUT);
  dht.begin();
 }
-
+//test for engr101
 void loop()
 {
   if(analogRead(controlPin) > 700){    //for manual watering of plants from raspberry pi
